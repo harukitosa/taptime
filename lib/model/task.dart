@@ -19,9 +19,9 @@ class Task {
         id: json['id'] as int,
         content: json['content'] as String,
         delete: json['delete_flag'] as String,
+        typeID: json['type_id'] as int,
         createTime: json['created_at'] as String,
         updateTime: json['updated_at'] as String,
-        typeID: json['type_id'] as int,
       );
 
   Map<String, dynamic> toMap() {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sagyoou/di.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -33,6 +34,7 @@ class _FormWidget extends StatefulWidget {
 class __FormWidgetState extends State<_FormWidget> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _textEditingController = TextEditingController();
+  final _task = initTask();
 
   @override
   void initState() {

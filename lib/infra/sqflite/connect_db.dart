@@ -67,7 +67,7 @@ Future<void> _createTransaction(Database db) async {
         color TEXT,
         content TEXT,
         created_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime')),
-        updated_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime')),
+        updated_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime'))
       )
     ''');
 
