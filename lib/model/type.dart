@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Type {
   Type({
     this.id,
@@ -14,6 +16,21 @@ class Type {
   final String createTime;
   final String updateTime;
   final String delete;
+
+  Color colorObj() {
+    switch (color) {
+      case 'yellow':
+        return Colors.yellow;
+      case 'green':
+        return Colors.teal;
+      case 'red':
+        return Colors.red;
+      case 'blue':
+        return Colors.blue;
+      default:
+        return Colors.black;
+    }
+  }
 
   factory Type.fromMap(Map<String, dynamic> json) => Type(
         id: json['id'] as int,

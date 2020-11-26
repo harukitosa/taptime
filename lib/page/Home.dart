@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sagyoou/di.dart';
+import 'package:sagyoou/usecase/task_usecase.dart';
+import 'package:sagyoou/usecase/type_usecase.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -34,11 +36,24 @@ class _FormWidget extends StatefulWidget {
 class __FormWidgetState extends State<_FormWidget> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _textEditingController = TextEditingController();
-  final _task = initTask();
+  TypeUseCase _typeUsecase;
+  TaskUseCase _taskUsecase;
 
   @override
   void initState() {
     super.initState();
+    Future(() async {
+      _typeUsecase = await initType();
+      _taskUsecase = await initTask();
+      // final val = await _typeUsecase.getAllType();
+      // print(val);
+      // final hoge = await _taskUsecase.getAllTask();
+      // print(hoge);
+      // for (final item in hoge) {
+      //   print(item.content);
+      // }
+      setState(() {});
+    });
   }
 
   @override
@@ -47,10 +62,10 @@ class __FormWidgetState extends State<_FormWidget> {
     super.dispose();
   }
 
-  void _onSave() {
+  void _onSave() async {
     if (_formKey.currentState.validate()) {
       this._formKey.currentState.save();
-      print(_textEditingController.text);
+      await _taskUsecase.createTask(_textEditingController.text, 1);
       _textEditingController.text = "";
       _snackBarAction();
     }

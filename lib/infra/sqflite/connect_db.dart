@@ -84,14 +84,23 @@ Future<void> _createTransaction(Database db) async {
       )
       ''');
 
-    // await _insertSeatTransaction(db);
+    await _insertTaskTypeTransaction(db);
   });
 }
 
-// Future<void> _insertSeatTransaction(Database db) async {
-//   await db.transaction((txn) async {
-//     final id = await txn.rawInsert('''
-//         INSERT INTO folder(title, delete_flag) VALUES('はじめのフォルダー', 'false')
-//     ''');
-//   });
-// }
+Future<void> _insertTaskTypeTransaction(Database db) async {
+  await db.transaction((txn) async {
+    await txn.rawInsert('''
+        INSERT INTO type(content, delete_flag, color) VALUES('仕事', 'false', 'red')
+    ''');
+    await txn.rawInsert('''
+        INSERT INTO type(content, delete_flag, color) VALUES('趣味', 'false', 'green')
+    ''');
+    await txn.rawInsert('''
+        INSERT INTO type(content, delete_flag, color) VALUES('休憩', 'false', 'yellow')
+    ''');
+    await txn.rawInsert('''
+        INSERT INTO type(content, delete_flag, color) VALUES('勉強', 'false', 'blue')
+    ''');
+  });
+}
