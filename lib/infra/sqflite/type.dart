@@ -10,7 +10,7 @@ class TypeRepository extends ITypeRepository {
   TypeRepository(this.db);
   final Database db;
   @override
-  Future<int> create(Type type) {
+  Future<int> create(TypeData type) {
     final id = db.insert(
       'type',
       type.toMap(),
@@ -20,7 +20,7 @@ class TypeRepository extends ITypeRepository {
   }
 
   @override
-  Future<void> update(Type type) {
+  Future<void> update(TypeData type) {
     final args = [type.id];
     return db.update(
       'type',
@@ -32,9 +32,9 @@ class TypeRepository extends ITypeRepository {
   }
 
   @override
-  Future<void> delete(Type type) {
+  Future<void> delete(TypeData type) {
     final args = [type.id];
-    final deletetype = Type(
+    final deletetype = TypeData(
       id: type.id,
       color: type.color,
       content: type.content,
@@ -53,7 +53,7 @@ class TypeRepository extends ITypeRepository {
   }
 
   @override
-  Future<List<Type>> getAll() async {
+  Future<List<TypeData>> getAll() async {
     List<Map<String, dynamic>> res;
     const arg = ['false'];
     res = await db.query(
@@ -61,6 +61,6 @@ class TypeRepository extends ITypeRepository {
       where: 'delete_flag = ?',
       whereArgs: arg,
     );
-    return res.map((c) => Type.fromMap(c)).toList();
+    return res.map((c) => TypeData.fromMap(c)).toList();
   }
 }

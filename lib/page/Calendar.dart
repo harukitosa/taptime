@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sagyoou/di.dart';
 import 'package:sagyoou/model/task.dart';
+import 'package:sagyoou/model/task_detail.dart';
+import 'package:sagyoou/model/type.dart';
+import 'package:sagyoou/usecase/get_task_by_day.dart';
 import 'package:sagyoou/usecase/task_usecase.dart';
+import 'package:sagyoou/usecase/type_usecase.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends StatelessWidget {
@@ -38,7 +42,10 @@ class CalendarView extends StatefulWidget {
 
 class _CalendarViewState extends State<CalendarView> {
   TaskUseCase _taskUsecase;
+  TypeUseCase _typeUsecase;
   List<Task> _list;
+  List<TypeData> _types;
+  List<TaskDetail> _taskList = [];
   CalendarController _calendarController;
 
   @override
@@ -47,10 +54,8 @@ class _CalendarViewState extends State<CalendarView> {
     _calendarController = CalendarController();
     Future(() async {
       _taskUsecase = await initTask();
-      _list = await _taskUsecase.getAllTask();
-      for (int i = 0; i < _list.length; i++) {
-        print(_list[i].createTime);
-      }
+      _typeUsecase = await initType();
+      _refreshData(DateTime.now());
       setState(() {});
     });
   }
@@ -66,10 +71,32 @@ class _CalendarViewState extends State<CalendarView> {
     List<dynamic> list,
     List<dynamic> list2,
   ) async {
-    _list = await _taskUsecase.getSpan(date);
-    setState(() {});
-    print(date);
-    print(_list);
+    _refreshData(date);
+  }
+
+  void _refreshData(DateTime date) {
+    Future(() async {
+      _list = await _taskUsecase.getSpan(date);
+      _types = await _typeUsecase.getAllType();
+      _taskList = [];
+      for (final task in _list) {
+        for (final type in _types) {
+          if (task.typeID == type.id) {
+            _taskList.add(
+              TaskDetail(
+                content: task.content,
+                id: task.id,
+                typeContent: type.content,
+                color: type.color,
+                createTime: task.createTime,
+              ),
+            );
+            continue;
+          }
+        }
+      }
+      setState(() {});
+    });
   }
 
   @override
@@ -106,23 +133,38 @@ class _CalendarViewState extends State<CalendarView> {
           Flexible(
             child: ListView.builder(
               itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 8,
-                    right: 4,
-                    left: 4,
+                return Container(
+                  padding: EdgeInsets.only(
+                    top: 2,
+                    left: 2,
                   ),
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.black12),
-                    ),
-                    child: Text('${_list[index].content}'),
+                  // decoration: new BoxDecoration(
+                  //   border: Border.all(color: Colors.black12),
+                  // ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 30,
+                        child: Center(
+                          child: Text('${_taskList[index].date()}'),
+                        ),
+                      ),
+                      Container(
+                        width: 10,
+                        height: 30,
+                        margin: EdgeInsets.only(
+                          right: 4,
+                          left: 4,
+                        ),
+                        color: _taskList[index].colorObj(),
+                      ),
+                      Text('${_taskList[index].content}'),
+                    ],
                   ),
                 );
               },
-              itemCount: _list.length,
+              itemCount: _taskList.length,
             ),
           ),
         ],

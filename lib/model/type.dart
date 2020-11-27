@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Type {
-  Type({
+class TypeData {
+  TypeData({
     this.id,
     this.color,
     this.content,
@@ -32,7 +32,7 @@ class Type {
     }
   }
 
-  factory Type.fromMap(Map<String, dynamic> json) => Type(
+  factory TypeData.fromMap(Map<String, dynamic> json) => TypeData(
         id: json['id'] as int,
         color: json['color'] as String,
         content: json['content'] as String,

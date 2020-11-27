@@ -5,7 +5,7 @@ class TypeUseCase {
   TypeUseCase({this.typeRepository});
   final ITypeRepository typeRepository;
 
-  Future<List<Type>> getAllType() async {
+  Future<List<TypeData>> getAllType() async {
     return typeRepository.getAll();
   }
 }

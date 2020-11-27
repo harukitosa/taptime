@@ -103,7 +103,7 @@ class __FormWidgetState extends State<_FormWidget> {
             child: TextFormField(
               controller: _textEditingController,
               keyboardType: TextInputType.multiline,
-              maxLines: 12,
+              maxLines: 8,
               decoration: const InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
