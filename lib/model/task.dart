@@ -15,6 +15,10 @@ class Task {
   final String delete;
   final int typeID;
 
+  DateTime date() {
+    return DateTime.parse(createTime);
+  }
+
   factory Task.fromMap(Map<String, dynamic> json) => Task(
         id: json['id'] as int,
         content: json['content'] as String,

@@ -11,6 +11,19 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Sagyoou"),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamed("/calendar");
+            },
+          ),
+        ],
       ),
       body: Container(
         child: Center(
@@ -45,13 +58,6 @@ class __FormWidgetState extends State<_FormWidget> {
     Future(() async {
       _typeUsecase = await initType();
       _taskUsecase = await initTask();
-      // final val = await _typeUsecase.getAllType();
-      // print(val);
-      // final hoge = await _taskUsecase.getAllTask();
-      // print(hoge);
-      // for (final item in hoge) {
-      //   print(item.content);
-      // }
       setState(() {});
     });
   }
@@ -99,8 +105,30 @@ class __FormWidgetState extends State<_FormWidget> {
               keyboardType: TextInputType.multiline,
               maxLines: 12,
               decoration: const InputDecoration(
-                labelText: "Task", // ラベル
-                border: InputBorder.none,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.black,
+                    width: 1,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.black,
+                    width: 2,
+                  ),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.redAccent,
+                    width: 2,
+                  ),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.black,
+                    width: 2,
+                  ),
+                ),
                 hintText: 'Enter your Task', // 入力ヒント
               ),
               validator: (value) {
@@ -112,12 +140,20 @@ class __FormWidgetState extends State<_FormWidget> {
             ),
           ),
           Center(
-            child: Padding(
+            child: Container(
+              width: 300,
+              height: 70,
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: RaisedButton(
-                color: Colors.blue[200],
+                color: Colors.black,
                 onPressed: _onSave,
-                child: Text('保存'),
+                child: Text(
+                  '記録',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
           ),

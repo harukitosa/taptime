@@ -14,4 +14,8 @@ class TaskUseCase {
       Task(content: content, typeID: typeID, delete: "false"),
     );
   }
+
+  Future<List<Task>> getSpan(DateTime day) async {
+    return repository.getSpan(day);
+  }
 }

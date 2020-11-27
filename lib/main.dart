@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sagyoou/page/Calendar.dart';
 import 'package:sagyoou/page/Home.dart';
 
 void main() {
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => HomePage(),
+        '/calendar': (context) => CalendarPage(),
       },
     );
   }

@@ -1,6 +1,8 @@
 import 'package:sagyoou/repository/task_repository.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sagyoou/model/task.dart';
+import "package:intl/intl.dart";
+import 'package:intl/date_symbol_data_local.dart';
 
 ITaskRepository newTaskRepository(Database db) {
   return TaskRepository(db);
@@ -60,6 +62,22 @@ class TaskRepository extends ITaskRepository {
       'task',
       where: 'delete_flag = ?',
       whereArgs: arg,
+    );
+    return res.map((c) => Task.fromMap(c)).toList();
+  }
+
+  @override
+  Future<List<Task>> getSpan(DateTime day) async {
+    initializeDateFormatting("ja_JP");
+    final tomorrow = day.add(new Duration(days: 1));
+    final formatter = new DateFormat('yyyy-MM-dd', "ja_JP");
+    final start = formatter.format(day);
+    final end = formatter.format(tomorrow);
+    final args = [start, end];
+    final res = await db.query(
+      'task',
+      where: '? <= created_at AND created_at <= ?',
+      whereArgs: args,
     );
     return res.map((c) => Task.fromMap(c)).toList();
   }

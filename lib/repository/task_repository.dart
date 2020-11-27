@@ -7,4 +7,5 @@ abstract class ITaskRepository {
   Future<void> update(Task task);
   Future<void> delete(Task task);
   Future<List<Task>> getAll();
+  Future<List<Task>> getSpan(DateTime day);
 }
