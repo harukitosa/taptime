@@ -10,7 +10,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sagyoou"),
+        title: Text(
+          "TapTime",
+          style: TextStyle(color: Colors.black54),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         actions: <Widget>[
