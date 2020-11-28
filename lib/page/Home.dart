@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taptime/model/type.dart';
 import 'package:taptime/di.dart';
 import 'package:taptime/usecase/task_usecase.dart';
 import 'package:taptime/usecase/type_usecase.dart';
@@ -54,6 +55,7 @@ class __FormWidgetState extends State<_FormWidget> {
   final TextEditingController _textEditingController = TextEditingController();
   TypeUseCase _typeUsecase;
   TaskUseCase _taskUsecase;
+  List<TypeData> _typeList = [];
 
   @override
   void initState() {
@@ -61,6 +63,7 @@ class __FormWidgetState extends State<_FormWidget> {
     Future(() async {
       _typeUsecase = await initType();
       _taskUsecase = await initTask();
+      _typeList = await _typeUsecase.getAllType();
       setState(() {});
     });
   }
@@ -74,10 +77,49 @@ class __FormWidgetState extends State<_FormWidget> {
   void _onSave() async {
     if (_formKey.currentState.validate()) {
       this._formKey.currentState.save();
-      await _taskUsecase.createTask(_textEditingController.text, 1);
+      await _taskUsecase.createTask(
+        _textEditingController.text,
+        _typeList[currentSelectedIndex].id,
+      );
       _textEditingController.text = "";
       _snackBarAction();
     }
+  }
+
+  int currentSelectedIndex = 0;
+
+  Widget _selectorItem(BuildContext context, TypeData item, int index) {
+    bool selectedIndex = index == currentSelectedIndex;
+    double width = selectedIndex ? 50 : 25;
+    double height = selectedIndex ? 50 : 25;
+    // Color borderColor = selectedIndex ? Colors.black54 : Colors.white;
+    return InkWell(
+      onTap: () {
+        currentSelectedIndex = index;
+        setState(() {});
+      },
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: item.colorObj(),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _colorSelector(BuildContext context) {
+    if (_typeList.length == 0) {
+      return [Text('loading')];
+    }
+    List<Widget> _list = [];
+    for (int i = 0; i < _typeList.length; i++) {
+      _list.add(
+        _selectorItem(context, _typeList[i], i),
+      );
+    }
+    return _list;
   }
 
   void _snackBarAction() {
@@ -89,7 +131,7 @@ class __FormWidgetState extends State<_FormWidget> {
           Scaffold.of(context).removeCurrentSnackBar();
         },
       ),
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 2),
     );
     Scaffold.of(context).showSnackBar(snackBar);
   }
@@ -106,7 +148,7 @@ class __FormWidgetState extends State<_FormWidget> {
             child: TextFormField(
               controller: _textEditingController,
               keyboardType: TextInputType.multiline,
-              maxLines: 8,
+              maxLines: 1,
               decoration: const InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
@@ -140,6 +182,13 @@ class __FormWidgetState extends State<_FormWidget> {
                 }
                 return null;
               },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0, bottom: 22.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: _colorSelector(context),
             ),
           ),
           Center(

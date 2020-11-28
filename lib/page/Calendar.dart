@@ -193,7 +193,7 @@ class _CalendarViewState extends State<CalendarView> {
                   ),
                   color: _taskList[index].colorObj(),
                 ),
-                Text('${_taskList[index].content}'),
+                Text('${_taskList[index].text()}'),
               ],
             ),
           );

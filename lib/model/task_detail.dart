@@ -17,6 +17,13 @@ class TaskDetail {
   final String color;
   final String typeContent;
 
+  String text() {
+    if (content.length > 20) {
+      return content.substring(0, 30);
+    }
+    return content;
+  }
+
   String date() {
     initializeDateFormatting("ja_JP");
     final formatter = new DateFormat('HH:mm', "ja_JP");
