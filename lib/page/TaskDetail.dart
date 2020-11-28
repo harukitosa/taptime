@@ -71,6 +71,34 @@ class _TaskDetailPageViewState extends State<TaskDetailPageView> {
     });
   }
 
+  /// Folderを削除するボタンを押した時
+  void _deletePopup() {
+    showDialog<AlertDialog>(
+      context: context,
+      child: AlertDialog(
+        title: const Text('確認画面'),
+        content: Text('${_task.content}を本当に削除しますか？'),
+        actions: <Widget>[
+          // ボタン領域
+          FlatButton(
+            child: const Text('キャンセル'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          FlatButton(
+            child: const Text('削除'),
+            onPressed: () async {
+              await _taskUsecase.delete(_task);
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   void _onSave() async {
     if (_formKey.currentState.validate()) {
       this._formKey.currentState.save();
@@ -107,7 +135,9 @@ class _TaskDetailPageViewState extends State<TaskDetailPageView> {
 
   List<Widget> _colorSelector(BuildContext context) {
     if (_typeList.length == 0) {
-      return [Text('loading')];
+      return [
+        Text('loading'),
+      ];
     }
     List<Widget> _list = [];
     for (int i = 0; i < _typeList.length; i++) {
@@ -189,23 +219,40 @@ class _TaskDetailPageViewState extends State<TaskDetailPageView> {
                 children: _colorSelector(context),
               ),
             ),
-            Center(
-              child: Container(
-                width: 300,
-                height: 70,
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: RaisedButton(
-                  color: Colors.black,
-                  onPressed: _onSave,
-                  child: Text(
-                    '保存',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
+            Column(
+              children: [
+                Center(
+                  child: Container(
+                    width: 300,
+                    height: 70,
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: RaisedButton(
+                      color: Colors.black,
+                      onPressed: _onSave,
+                      child: Text(
+                        '保存',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                SizedBox(
+                  height: 350,
+                ),
+                Center(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.black,
+                      size: 32,
+                    ),
+                    onPressed: _deletePopup,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

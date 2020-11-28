@@ -23,6 +23,10 @@ class TaskUseCase {
     return repository.getByID(id);
   }
 
+  Future<void> delete(Task task) async {
+    return repository.delete(task);
+  }
+
   Future<void> update(
     Task task,
     String content,

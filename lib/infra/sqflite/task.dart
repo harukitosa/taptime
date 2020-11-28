@@ -73,10 +73,10 @@ class TaskRepository extends ITaskRepository {
     final formatter = new DateFormat('yyyy-MM-dd', "ja_JP");
     final start = formatter.format(day);
     final end = formatter.format(tomorrow);
-    final args = [start, end];
+    final args = [start, end, "false"];
     final res = await db.query(
       'task',
-      where: '? <= created_at AND created_at <= ?',
+      where: '? <= created_at AND created_at <= ? AND delete_flag == ?',
       whereArgs: args,
     );
     return res.map((c) => Task.fromMap(c)).toList();

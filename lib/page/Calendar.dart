@@ -182,7 +182,11 @@ class _CalendarViewState extends State<CalendarView> {
                       '/taskdetail',
                       arguments: _taskList[index].id,
                     )
-                    .then((value) => {_refreshData(DateTime.now())});
+                    .then(
+                      (value) => {
+                        _refreshData(DateTime.now()),
+                      },
+                    );
               },
               child: Row(
                 children: [
