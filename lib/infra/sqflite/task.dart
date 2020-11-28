@@ -81,4 +81,18 @@ class TaskRepository extends ITaskRepository {
     );
     return res.map((c) => Task.fromMap(c)).toList();
   }
+
+  @override
+  Future<Task> getByID(int id) async {
+    List<Map<String, dynamic>> res;
+    final arg = [id, 'false'];
+    res = await db.query(
+      'task',
+      where: 'id = ? and delete_flag = ?',
+      whereArgs: arg,
+      orderBy: 'created_at DESC',
+    );
+    final task = res.map((c) => Task.fromMap(c)).toList();
+    return task[0];
+  }
 }

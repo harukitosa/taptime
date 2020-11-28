@@ -175,26 +175,36 @@ class _CalendarViewState extends State<CalendarView> {
             // decoration: new BoxDecoration(
             //   border: Border.all(color: Colors.black12),
             // ),
-            child: Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 30,
-                  child: Center(
-                    child: Text('${_taskList[index].date()}'),
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(
+                      '/taskdetail',
+                      arguments: _taskList[index].id,
+                    )
+                    .then((value) => {_refreshData(DateTime.now())});
+              },
+              child: Row(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 30,
+                    child: Center(
+                      child: Text('${_taskList[index].date()}'),
+                    ),
                   ),
-                ),
-                Container(
-                  width: 10,
-                  height: 30,
-                  margin: EdgeInsets.only(
-                    right: 4,
-                    left: 4,
+                  Container(
+                    width: 10,
+                    height: 30,
+                    margin: EdgeInsets.only(
+                      right: 4,
+                      left: 4,
+                    ),
+                    color: _taskList[index].colorObj(),
                   ),
-                  color: _taskList[index].colorObj(),
-                ),
-                Text('${_taskList[index].text()}'),
-              ],
+                  Text('${_taskList[index].text()}'),
+                ],
+              ),
             ),
           );
         },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:taptime/page/Calendar.dart';
 import 'package:taptime/page/Home.dart';
 import 'package:taptime/page/Setting.dart';
+import 'package:taptime/page/TaskDetail.dart';
 
 /// TapTime 玄人むけの時間管理アプリ
 void main() {
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => HomePage(),
         '/calendar': (context) => CalendarPage(),
         '/setting': (context) => SettingPage(),
+        '/taskdetail': (context) => TaskDetailPage(),
       },
     );
   }

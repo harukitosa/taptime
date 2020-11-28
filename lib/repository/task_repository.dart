@@ -8,4 +8,5 @@ abstract class ITaskRepository {
   Future<void> delete(Task task);
   Future<List<Task>> getAll();
   Future<List<Task>> getSpan(DateTime day);
+  Future<Task> getByID(int id);
 }
