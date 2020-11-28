@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sagyoou/page/Calendar.dart';
-import 'package:sagyoou/page/Home.dart';
-import 'package:sagyoou/page/Setting.dart';
+import 'package:taptime/page/Calendar.dart';
+import 'package:taptime/page/Home.dart';
+import 'package:taptime/page/Setting.dart';
 
 /// TapTime 玄人むけの時間管理アプリ
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Sagyoou',
+      title: 'taptime',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

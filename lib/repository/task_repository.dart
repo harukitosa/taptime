@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:sagyoou/model/task.dart';
+import 'package:taptime/model/task.dart';
 
 abstract class ITaskRepository {
   Future<int> create(Task task);

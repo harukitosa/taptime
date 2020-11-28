@@ -1,6 +1,6 @@
-import 'package:sagyoou/repository/type_repository.dart';
+import 'package:taptime/repository/type_repository.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sagyoou/model/type.dart';
+import 'package:taptime/model/type.dart';
 
 ITypeRepository newtypeRepository(Database db) {
   return TypeRepository(db);

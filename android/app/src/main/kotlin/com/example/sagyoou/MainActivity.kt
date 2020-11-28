@@ -1,4 +1,4 @@
-package com.example.sagyoou
+package com.example.taptime
 
 import io.flutter.embedding.android.FlutterActivity
 

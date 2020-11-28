@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sagyoou/di.dart';
-import 'package:sagyoou/usecase/task_usecase.dart';
-import 'package:sagyoou/usecase/type_usecase.dart';
+import 'package:taptime/di.dart';
+import 'package:taptime/usecase/task_usecase.dart';
+import 'package:taptime/usecase/type_usecase.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);

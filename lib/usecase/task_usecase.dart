@@ -1,5 +1,5 @@
-import 'package:sagyoou/repository/task_repository.dart';
-import 'package:sagyoou/model/task.dart';
+import 'package:taptime/repository/task_repository.dart';
+import 'package:taptime/model/task.dart';
 
 class TaskUseCase {
   TaskUseCase({this.repository});
