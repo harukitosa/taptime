@@ -59,8 +59,9 @@ class _CalendarViewState extends State<CalendarView> {
   TypeUseCase _typeUsecase;
   List<Task> _list;
   List<TypeData> _types;
-  List<TaskDetail> _taskList = [];
+  Future<List<TaskDetail>> _taskList;
   CalendarController _calendarController;
+  DateTime _selectedDate = DateTime.now();
 
   @override
   void initState() {
@@ -69,7 +70,7 @@ class _CalendarViewState extends State<CalendarView> {
     Future(() async {
       _taskUsecase = await initTask();
       _typeUsecase = await initType();
-      _refreshData(DateTime.now());
+      _taskList = _fetchData(_selectedDate);
       setState(() {});
     });
   }
@@ -85,32 +86,32 @@ class _CalendarViewState extends State<CalendarView> {
     List<dynamic> list,
     List<dynamic> list2,
   ) async {
-    _refreshData(date);
+    _selectedDate = date;
+    _taskList = _fetchData(_selectedDate);
+    setState(() {});
   }
 
-  void _refreshData(DateTime date) {
-    Future(() async {
-      _list = await _taskUsecase.getSpan(date);
-      _types = await _typeUsecase.getAllType();
-      _taskList = [];
-      for (final task in _list) {
-        for (final type in _types) {
-          if (task.typeID == type.id) {
-            _taskList.add(
-              TaskDetail(
-                content: task.content,
-                id: task.id,
-                typeContent: type.content,
-                color: type.color,
-                createTime: task.createTime,
-              ),
-            );
-            continue;
-          }
+  Future<List<TaskDetail>> _fetchData(DateTime date) async {
+    _list = await _taskUsecase.getSpan(date);
+    _types = await _typeUsecase.getAllType();
+    var _tasks = <TaskDetail>[];
+    for (final task in _list) {
+      for (final type in _types) {
+        if (task.typeID == type.id) {
+          _tasks.add(
+            TaskDetail(
+              content: task.content,
+              id: task.id,
+              typeContent: type.content,
+              color: type.color,
+              createTime: task.createTime,
+            ),
+          );
+          continue;
         }
       }
-      setState(() {});
-    });
+    }
+    return _tasks;
   }
 
   @override
@@ -144,76 +145,99 @@ class _CalendarViewState extends State<CalendarView> {
             // onVisibleDaysChanged: _onVisibleDaysChanged,
             // onCalendarCreated: _onCalendarCreated,
           ),
-          _switchTaskWidget(context),
+          _taskListWidget(context),
         ],
       ),
     );
   }
 
-  Widget _switchTaskWidget(BuildContext context) {
-    if (_taskList.length > 0) {
-      return _taskListWidget(context);
-    }
-    return _noTaskWidget(context);
-  }
-
-  Widget _noTaskWidget(BuildContext context) {
-    return Center(
-      child: Text("タスクはありません"),
+  Widget _taskListWidget(BuildContext context) {
+    return Flexible(
+      child: FutureBuilder<List<TaskDetail>>(
+        future: _taskList,
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<List<TaskDetail>> snapshot,
+        ) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              if (snapshot.hasError) {
+                return Icon(
+                  Icons.error_outline,
+                  color: Colors.red,
+                  size: 60,
+                );
+              }
+              if (snapshot.hasData) {
+                return _listShow(context, snapshot.data);
+              }
+              return Center(
+                child: SizedBox(
+                  height: 50.0,
+                  width: 50.0,
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            default:
+              return Center(
+                child: SizedBox(
+                  height: 50.0,
+                  width: 50.0,
+                  child: CircularProgressIndicator(),
+                ),
+              );
+          }
+        },
+      ),
     );
   }
 
-  Widget _taskListWidget(BuildContext context) {
-    return Flexible(
-      child: ListView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            padding: EdgeInsets.only(
-              top: 2,
-              left: 2,
-            ),
-            // decoration: new BoxDecoration(
-            //   border: Border.all(color: Colors.black12),
-            // ),
-            child: InkWell(
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed(
-                      '/taskdetail',
-                      arguments: _taskList[index].id,
-                    )
-                    .then(
-                      (value) => {
-                        _refreshData(DateTime.now()),
-                      },
-                    );
-              },
-              child: Row(
-                children: [
-                  Container(
-                    width: 40,
-                    height: 30,
-                    child: Center(
-                      child: Text('${_taskList[index].date()}'),
-                    ),
+  Widget _listShow(BuildContext context, List<TaskDetail> _tasks) {
+    return ListView.builder(
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          padding: EdgeInsets.only(
+            top: 2,
+            left: 2,
+          ),
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed(
+                    '/taskdetail',
+                    arguments: _tasks[index].id,
+                  )
+                  .then(
+                    (value) => {
+                      _fetchData(DateTime.now()),
+                    },
+                  );
+            },
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 30,
+                  child: Center(
+                    child: Text('${_tasks[index].date()}'),
                   ),
-                  Container(
-                    width: 10,
-                    height: 30,
-                    margin: EdgeInsets.only(
-                      right: 4,
-                      left: 4,
-                    ),
-                    color: _taskList[index].colorObj(),
+                ),
+                Container(
+                  width: 10,
+                  height: 30,
+                  margin: EdgeInsets.only(
+                    right: 4,
+                    left: 4,
                   ),
-                  Text('${_taskList[index].text()}'),
-                ],
-              ),
+                  color: _tasks[index].colorObj(),
+                ),
+                Text('${_tasks[index].text()}'),
+              ],
             ),
-          );
-        },
-        itemCount: _taskList.length,
-      ),
+          ),
+        );
+      },
+      itemCount: _tasks.length,
     );
   }
 }
