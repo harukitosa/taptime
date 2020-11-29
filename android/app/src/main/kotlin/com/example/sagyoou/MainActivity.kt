@@ -1,4 +1,4 @@
-package com.example.taptime
+package com.example.TimeTap
 
 import io.flutter.embedding.android.FlutterActivity
 

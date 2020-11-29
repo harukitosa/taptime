@@ -1,6 +1,6 @@
-import 'package:taptime/repository/task_repository.dart';
+import 'package:TimeTap/repository/task_repository.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:taptime/model/task.dart';
+import 'package:TimeTap/model/task.dart';
 import "package:intl/intl.dart";
 import 'package:intl/date_symbol_data_local.dart';
 

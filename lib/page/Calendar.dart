@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:taptime/di.dart';
-import 'package:taptime/model/task.dart';
-import 'package:taptime/model/task_detail.dart';
-import 'package:taptime/model/type.dart';
-import 'package:taptime/usecase/task_usecase.dart';
-import 'package:taptime/usecase/type_usecase.dart';
+import 'package:TimeTap/di.dart';
+import 'package:TimeTap/model/task.dart';
+import 'package:TimeTap/model/task_detail.dart';
+import 'package:TimeTap/model/type.dart';
+import 'package:TimeTap/usecase/task_usecase.dart';
+import 'package:TimeTap/usecase/type_usecase.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends StatelessWidget {

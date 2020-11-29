@@ -1,4 +1,4 @@
-# taptime
+# TimeTap
 
 A new Flutter project.
 

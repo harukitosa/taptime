@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:taptime/model/task.dart';
-import 'package:taptime/di.dart';
-import 'package:taptime/model/type.dart';
-import 'package:taptime/usecase/task_usecase.dart';
-import 'package:taptime/usecase/type_usecase.dart';
+import 'package:TimeTap/model/task.dart';
+import 'package:TimeTap/di.dart';
+import 'package:TimeTap/model/type.dart';
+import 'package:TimeTap/usecase/task_usecase.dart';
+import 'package:TimeTap/usecase/type_usecase.dart';
 
 class TaskDetailPage extends StatelessWidget {
   const TaskDetailPage({Key key}) : super(key: key);
@@ -240,7 +240,7 @@ class _TaskDetailPageViewState extends State<TaskDetailPageView> {
                   ),
                 ),
                 SizedBox(
-                  height: 350,
+                  height: 30,
                 ),
                 Center(
                   child: IconButton(

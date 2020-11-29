@@ -1,5 +1,5 @@
-import 'package:taptime/repository/task_repository.dart';
-import 'package:taptime/model/task.dart';
+import 'package:TimeTap/repository/task_repository.dart';
+import 'package:TimeTap/model/task.dart';
 
 class TaskUseCase {
   TaskUseCase({this.repository});

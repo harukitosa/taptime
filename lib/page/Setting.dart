@@ -5,6 +5,7 @@ class SettingPage extends StatelessWidget {
   final list = [
     _ItemIconMap(title: '利用規約', icon: const Icon(Icons.settings)),
     _ItemIconMap(title: 'プライバシーポリシー', icon: const Icon(Icons.settings)),
+    _ItemIconMap(title: 'タグの変更', icon: const Icon(Icons.settings)),
   ];
 
   Future<void> _launchURL(String url) async {
@@ -27,6 +28,10 @@ class SettingPage extends StatelessWidget {
       }
       if (list[index].title == 'プライバシーポリシー') {
         _launchURL('https://harukitosa.github.io/tap_time_privacy.html');
+      }
+
+      if (list[index].title == 'タグの変更') {
+        Navigator.of(context).pushNamed('/typedetails');
       }
     }
 

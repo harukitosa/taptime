@@ -1,5 +1,5 @@
-import 'package:taptime/repository/type_repository.dart';
-import 'package:taptime/model/type.dart';
+import 'package:TimeTap/repository/type_repository.dart';
+import 'package:TimeTap/model/type.dart';
 
 class TypeUseCase {
   TypeUseCase({this.typeRepository});
@@ -7,5 +7,11 @@ class TypeUseCase {
 
   Future<List<TypeData>> getAllType() async {
     return typeRepository.getAll();
+  }
+
+  Future<void> save(List<TypeData> list) async {
+    for (int i = 0; i < list.length; i++) {
+      await typeRepository.update(list[i]);
+    }
   }
 }

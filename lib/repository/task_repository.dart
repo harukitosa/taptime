@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:taptime/model/task.dart';
+import 'package:TimeTap/model/task.dart';
 
 abstract class ITaskRepository {
   Future<int> create(Task task);

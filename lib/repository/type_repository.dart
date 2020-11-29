@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:taptime/model/type.dart';
+import 'package:TimeTap/model/type.dart';
 
 abstract class ITypeRepository {
   Future<int> create(TypeData task);

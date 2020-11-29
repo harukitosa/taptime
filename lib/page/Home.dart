@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:taptime/model/type.dart';
-import 'package:taptime/di.dart';
-import 'package:taptime/usecase/task_usecase.dart';
-import 'package:taptime/usecase/type_usecase.dart';
+import 'package:TimeTap/model/type.dart';
+import 'package:TimeTap/di.dart';
+import 'package:TimeTap/usecase/task_usecase.dart';
+import 'package:TimeTap/usecase/type_usecase.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "TapTime",
+          "TimeTap",
           style: TextStyle(color: Colors.black54),
         ),
         backgroundColor: Colors.transparent,
